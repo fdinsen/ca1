@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Add Member</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Add member</h1>
+        <form>
+            <input type="text" placeholder="name" id="name">
+            <input type="text" placeholder="Student id" id="sid">
+            <input type="text" placeholder="Favourite Tv Series" id="favtv">
+            <input type="text" placeholder="Favourite Musician" id="favmus">
+            <input type="number" placeholder="Year of birth" id="year">
+            <input type="text" placeholder="City" id="city">
+            <button id="createButton">Create User</button>
+        </form>
+        <div id="confirmContainer"></div>
+
+        <br><br>
+        <div><a href="index.html">Back</a></div>
+
+        <script>
+            document.getElementById("createButton").addEventListener("click", createUser);
+
+            function createUser(evnt) {
+                evnt.preventDefault();
+                let name = document.getElementById("name").value;
+                let sid = document.getElementById("sid").value;
+                let favtv = document.getElementById("favtv").value;
+                let favmus = document.getElementById("favmus").value;
+                let year = document.getElementById("year").value;
+                let city = document.getElementById("city").value;
+
+                let parameters
+                        = "?name=" + name
+                        + "&sid=" + sid
+                        + "&favtv=" + favtv
+                        + "&favmus=" + favmus
+                        + "&year=" + year
+                        + "&city=" + city;
+
+                let url = "api/groupmembers/add" + parameters;
+                fetch(url)
+                        .then(res => res.json()) //in flow1, just do it
+                        .then(data => {
+                            // Inside this callback, and only here, the response data is available
+                            let confirm = "User " + data.name + " was created";
+                            document.getElementById("confirmContainer").innerHTML = confirm;
+                        });
+            }
+        </script>
+    </body>
+</html>
