@@ -9,23 +9,54 @@ and open the template in the editor.
         <title>Add Member</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     </head>
     <body>
-        <h1>Add member</h1>
-        <form>
-            <input type="text" placeholder="name" id="name">
-            <input type="text" placeholder="Student id" id="sid">
-            <input type="text" placeholder="Favourite Tv Series" id="favtv">
-            <input type="text" placeholder="Favourite Musician" id="favmus">
-            <input type="number" placeholder="Year of birth" id="year">
-            <input type="text" placeholder="City" id="city">
-            <button id="createButton">Create User</button>
+        <div class="jumbotron">
+            <h1 class="display-2">𝜋-<b>Group</b></h1>
+            <h1 class="lead">Add member</h1>   
+            <hr class="my-4">
+
+            <div><a class="btn btn-primary btn-lg" href="index.html">Back</a></div>
+        </div>
+
+        <form class="col-7">
+            <div class="form-row">
+                <div class="form-group col-5">
+                    <label for="name">Name</label>
+                    <input class="form-control" type="text" placeholder="name" id="name">
+                </div>
+                <div class="form-group col-5">
+                    <label for="sid">Student ID</label>
+                    <input class="form-control" type="text" placeholder="Student id" id="sid">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-5">
+                    <label for="favtv">Favourite Tv-Show</label>
+                    <input class="form-control" type="text" placeholder="Favourite Tv Series" id="favtv">
+                </div>
+                <div class="form-group col-5">  
+                    <label for="favmus">Favourite Musician</label>
+                    <input class="form-control" type="text" placeholder="Favourite Musician" id="favmus">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-5">
+                    <label for="year">Year of Birth</label>
+                    <input class="form-control" type="number" placeholder="Year of birth" id="year">
+                </div>
+                <div class="form-group col-5">
+                    <label for="city">City</label>
+                    <input class="form-control" type="text" placeholder="City" id="city">
+                </div>
+                <div class="col-5">
+                    <button class="btn btn-primary btn-lg" id="createButton">Create User</button>
+                </div>
+            </div>
+
         </form>
         <div id="confirmContainer"></div>
-
-        <br><br>
-        <div><a href="index.html">Back</a></div>
-
         <script>
             document.getElementById("createButton").addEventListener("click", createUser);
 
@@ -56,5 +87,8 @@ and open the template in the editor.
                         });
             }
         </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     </body>
 </html>

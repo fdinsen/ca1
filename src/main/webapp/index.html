@@ -6,15 +6,18 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     </head>
     <body onLoad="updateTable()">
-        <h1>Π Group</h1>
-        <h2>Class E</h2>
-        <h3>Members:</h3>
-        <div id="tableContainer"></div>
-        <button id="reloadButton">Reload members</button>
+        <div class="jumbotron">
+            <h1 class="display-2">𝜋-<b>Group</b></h1>
+            <p class="lead">Class E</p>
+            <hr class="my-4">
+
+            <h3 class="display-5">Members:</h3>
+            <div id="tableContainer"></div>
+            <button id="reloadButton" class="btn btn-primary btn-lg">Reload members</button>
+        </div>
         
-        <br><br>
-        
-        <div>
+
+        <div class="pl-2">
             <h3>Links</h3>
             <ul>
                 <li><a href="whodidwhat.html">Who did what and our group contract</a></li>
@@ -24,51 +27,51 @@
                 <li><a href="cars.html" target="_blank">Cars for sale page</a></li>
             </ul>
         </div>
-        
-        
+
+
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
         <script>
-            document.getElementById("reloadButton").addEventListener("click", updateTable());
-            
-            function updateTable() {
-                let url = "api/groupmembers/all";
-                fetch(url)
+        document.getElementById("reloadButton").addEventListener("click", updateTable());
+
+        function updateTable() {
+            let url = "api/groupmembers/all";
+            fetch(url)
                     .then(res => res.json()) //in flow1, just do it
                     .then(data => {
                         // Inside this callback, and only here, the response data is available
                         let table = createTable(data);
                         document.getElementById("tableContainer").innerHTML = table;
                     });
-            }
+        }
 
-            function createTable(array) {
-                let stringToReturn = "<table class=\"table\">" 
-                        + "<thead>" 
-                        + "<tr>"
-                        + "<th scope=\"col\">Name</th>"
-                        + "<th scope=\"col\">StudentId</th>"
-                        + "<th scope=\"col\">Favourite Tv Series</th>" 
-                        + "<th scope=\"col\">Favourite Musician</th>" 
-                        + "<th scope=\"col\">Birth Year</th>" 
-                        + "</tr>"
-                        + "</thead>" 
-                        + "<tbody>";
-                array.map(element => {
-                    let toBeAppended = "<tr>" 
-                            + "<td>" + element.name + "</td>"
-                            + "<td>" + element.studentId + "</td>"
-                            + "<td>" + element.favouriteTvSeries + "</td>"
-                            + "<td>" + element.favouriteMusician + "</td>"
-                            + "<td>" + element.yearOfBirth + "</td>" 
-                            + "</tr>";
-                    stringToReturn += toBeAppended;
-                });
-                stringToReturn += 
-                        "</tbody></table>";
-                return stringToReturn;
-            }
+        function createTable(array) {
+            let stringToReturn = "<table class=\"table\">"
+                    + "<thead>"
+                    + "<tr>"
+                    + "<th scope=\"col\">Name</th>"
+                    + "<th scope=\"col\">StudentId</th>"
+                    + "<th scope=\"col\">Favourite Tv Series</th>"
+                    + "<th scope=\"col\">Favourite Musician</th>"
+                    + "<th scope=\"col\">Birth Year</th>"
+                    + "</tr>"
+                    + "</thead>"
+                    + "<tbody>";
+            array.map(element => {
+                let toBeAppended = "<tr>"
+                        + "<td>" + element.name + "</td>"
+                        + "<td>" + element.studentId + "</td>"
+                        + "<td>" + element.favouriteTvSeries + "</td>"
+                        + "<td>" + element.favouriteMusician + "</td>"
+                        + "<td>" + element.yearOfBirth + "</td>"
+                        + "</tr>";
+                stringToReturn += toBeAppended;
+            });
+            stringToReturn +=
+                    "</tbody></table>";
+            return stringToReturn;
+        }
         </script>
 
     </body>
