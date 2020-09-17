@@ -36,7 +36,7 @@ public class CarRessource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String getAll() {
-        List<CarDTO> liste = FACADE.getAllMovies();
+        List<CarDTO> liste = FACADE.getAllCars();
         
         return new Gson().toJson(liste);
     }
@@ -46,7 +46,7 @@ public class CarRessource {
     @Produces({MediaType.APPLICATION_JSON})
     public String getById(@PathParam("id") int id) {
         
-        CarDTO cardto = FACADE.getMovieByID(id);
+        CarDTO cardto = FACADE.getCarByID(id);
         
         return new Gson().toJson(cardto);
     }

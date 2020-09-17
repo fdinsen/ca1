@@ -72,11 +72,11 @@ public class CarFacadeTest {
      * Test of getAllMovies method, of class CarFacade.
      */
     @Test
-    public void testGetAllMovies() {
+    public void testGetAllCars() {
         
         int expected = 3;
         
-        int actual = facade.getAllMovies().size();
+        int actual = facade.getAllCars().size();
         
         assertEquals(expected, actual);
 
@@ -87,7 +87,7 @@ public class CarFacadeTest {
         
         String exspected = "Ford";
         
-        String actual = facade.getMovieByID(5).getMake();
+        String actual = facade.getCarByID(c1.getId()).getMake();
         
         assertEquals(exspected, actual);
     }
