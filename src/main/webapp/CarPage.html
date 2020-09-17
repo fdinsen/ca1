@@ -16,7 +16,6 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
     <body>
-
         <div class="container">
             <div class="row">
                 <div class="col-sm">
@@ -42,9 +41,10 @@ and open the template in the editor.
                     <button id = "reset" type="button" class="btn btn-primary">Reset</button>
                 </div>
                 <div class="col-sm">
-
                 </div>
             </div>
+            <br><br>
+            <a href="index.html">Back</a>
         </div>
 
 
@@ -56,7 +56,7 @@ and open the template in the editor.
             document.getElementById("newest").addEventListener("click", getNewestFirst);
             document.getElementById("reset").addEventListener("click", getIdFirst);
             document.getElementById("filterMake").addEventListener("click", getFilterMake);
-            
+
             getData(getTable);
 
             function getCheapestFirst() {
@@ -69,7 +69,7 @@ and open the template in the editor.
                 getData(sortId);
             }
             function getFilterMake() {
-                
+
                 getData(filterMake)
             }
 
@@ -129,12 +129,12 @@ and open the template in the editor.
                 getTable(table);
             }
             function filterMake(table) {
-                
+
                 let value = document.getElementById("input").value;
-                
-                let newTable = table.filter(function(tableRow){
-                    
-                    return tableRow.make.toLowerCase() === value.toLowerCase(); 
+
+                let newTable = table.filter(function (tableRow) {
+
+                    return tableRow.make.toLowerCase() === value.toLowerCase();
                 });
 
                 getTable(newTable);
