@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Our Cool Jokes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+            td { white-space:pre }
+
+        </style>
+    </head>
+    <body>
+        <h1>Our Cool Jokes</h1>
+        <form id="form" action="#">
+            <input type="text" id="id" name="uid">
+            <input type="submit" id="single" value="Get Joke">
+            <input type="submit" id="random" value="Get Random Joke">
+            <input type="submit" id="all" value="Get All Jokes">
+        </form> 
+        <table>
+            <thead><tr><th>ID</th><th>Joke</th><th>Type</th></tr></thead>
+            <tbody id="tbody">
+
+
+            </tbody>
+        </table>
+        <h2>Add Joke</h2>
+        <form id="form" action="#">
+            <label>Joke</label>
+            <textarea id="joke" name="joke" required></textarea></br>
+            <label>Type</label>
+            <input type="text" id="type" name="type" required>
+            </br>
+            <input type="submit" id="addJoke" value="Add Joke">
+        </form> 
+        
+        <script src="jokes.js"></script>
+    </body>
+</html>
