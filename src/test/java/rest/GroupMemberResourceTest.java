@@ -1,7 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rest;
 
-import entities.RenameMe;
-import utils.EMF_Creator;
+import entities.GroupMember;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
@@ -14,18 +18,27 @@ import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-//Uncomment the line below, to temporarily disable this test
-//@Disabled
-public class RenameMeResourceTest {
+import utils.EMF_Creator;
+
+/**
+ *
+ * @author gamma
+ */
+public class GroupMemberResourceTest {
+    
+    public GroupMemberResourceTest() {
+    }
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static RenameMe r1,r2;
+    private static GroupMember gm1, gm2, gm3;
     
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -62,13 +75,15 @@ public class RenameMeResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new RenameMe("Some txt","More text");
-        r2 = new RenameMe("aaa","bbb");
+        gm1 = new GroupMember("Peter", "pe12", "Twin Peaks", "Aerosmith", 1990, "Lyngby");
+        gm2 = new GroupMember("Lise", "li32", "Brooklyn Nine-Nine", "Snow Patrol", 1996, "Buddinge");
+        gm3 = new GroupMember("James", "ja16", "The Good Place", "Syd Matters", 1995, "Bagsvaerd");
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(r1);
-            em.persist(r2); 
+            em.createNamedQuery("GroupMember.deleteAllRows").executeUpdate();
+            em.persist(gm1);
+            em.persist(gm2);
+            em.persist(gm3);
             em.getTransaction().commit();
         } finally { 
             em.close();
@@ -76,29 +91,54 @@ public class RenameMeResourceTest {
     }
     
     @Test
-    public void testServerIsUp() {
-        System.out.println("Testing is server UP");
-        given().when().get("/xxx").then().statusCode(200);
-    }
-   
-    //This test assumes the database contains two rows
-    @Test
-    public void testDummyMsg() throws Exception {
-        given()
-        .contentType("application/json")
-        .get("/xxx/").then()
-        .assertThat()
-        .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("msg", equalTo("Hello World"));   
+    public void logging() {
+        given().log().all().when().get("/groupmembers/all").then().log().body();
     }
     
     @Test
-    public void testCount() throws Exception {
+    public void testServerIsUp() {
+        System.out.println("Testing is server UP");
+        given().when().get("/groupmembers").then().statusCode(200);
+    }
+    
+    @Test
+    public void testGetAllOnSize() {
         given()
-        .contentType("application/json")
-        .get("/xxx/count").then()
-        .assertThat()
-        .statusCode(HttpStatus.OK_200.getStatusCode())
-        .body("count", equalTo(2));   
+         .contentType("application/json")
+         .get("/groupmembers/all").then()
+         .assertThat()
+         .statusCode(HttpStatus.OK_200.getStatusCode())
+         .body("", hasSize(3));        
+    }
+    
+    @Test
+    public void testGetAllOnContent() {
+        given()
+         .contentType("application/json")
+         .get("/groupmembers/all").then()
+         .assertThat()
+         .statusCode(HttpStatus.OK_200.getStatusCode())
+         .body("name", hasItem("James")); 
+    }
+    
+    @Test
+    public void testAddMemberOnDTO() {
+        String parameters 
+                = "?name=Karl" 
+                + "&sid=ka55" 
+                + "&favtv=Lucifer"
+                + "&favmus=GunsAndRoses"
+                + "&year=1995"
+                + "&city=herlev";
+        given()
+         .contentType("application/json")
+         .get("groupmembers/add" + parameters).then()
+         .assertThat()
+         .statusCode(HttpStatus.OK_200.getStatusCode())
+         .body("name", equalTo("Karl")).and()
+         .body("studentId", equalTo("ka55")).and()
+         .body("favouriteTvSeries", equalTo("Lucifer")).and()
+         .body("favouriteMusician", equalTo("GunsAndRoses")).and()
+         .body("yearOfBirth", equalTo(1995));
     }
 }
