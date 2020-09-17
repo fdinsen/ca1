@@ -5,7 +5,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!--    <class>entities.RenameMe</class>-->
     <class>entities.Car</class>
-    <class>entities.RenameMe</class>
+    <class>entities.Joke</class>
     <class>entities.GroupMember</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
