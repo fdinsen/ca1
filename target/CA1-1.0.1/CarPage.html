@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+
+                </div>
+                <div class="col-6">
+                    <div id = "table"></div>
+
+                    <form>
+                        <div class="row">
+                            <label for="input">Make</label>
+                            <div class="col">
+                                <input id = "input" type="text" class="form-control" placeholder="make">
+                            </div>
+                            <div class="col">
+                                <button id = "filterMake" type="button" class="btn btn-primary">Filter</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <button id = "cheapest" type="button" class="btn btn-primary">cheapest</button>
+                    <button id = "newest" type="button" class="btn btn-primary">newest</button>
+                    <button id = "reset" type="button" class="btn btn-primary">Reset</button>
+                </div>
+                <div class="col-sm">
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <script>
+
+            document.getElementById("cheapest").addEventListener("click", getCheapestFirst);
+            document.getElementById("newest").addEventListener("click", getNewestFirst);
+            document.getElementById("reset").addEventListener("click", getIdFirst);
+            document.getElementById("filterMake").addEventListener("click", getFilterMake);
+            
+            getData(getTable);
+
+            function getCheapestFirst() {
+                getData(sortCheapFirst);
+            }
+            function getNewestFirst() {
+                getData(sortNewestFirst);
+            }
+            function getIdFirst() {
+                getData(sortId);
+            }
+            function getFilterMake() {
+                
+                getData(filterMake)
+            }
+
+
+            function getData(callback) {
+                let URL = "api/Car/all";
+
+                fetch(URL)
+                        .then(response => response.json())
+                        .then(data => callback(data));
+
+            }
+
+            function getTable(table) {
+
+                let htmlResponse = "<table class=\"table table-sm\"> <thead class=\"thead-dark\"><th scope=\"col\">ID</th><th scope=\"col\">Make</th>" +
+                        "<th scope=\"col\">Model</th><th scope=\"col\">Price</th><th scope=\"col\">Year</th></thead><tbody>";
+                table.map(tableRow => {
+                    htmlResponse += "<tr>";
+                    htmlResponse += "<th scope=\"row\">" + tableRow.id + "</th>";
+                    htmlResponse += "<td>" + tableRow.make + "</td>";
+                    htmlResponse += "<td>" + tableRow.model + "</td>";
+                    htmlResponse += "<td>" + tableRow.price + "</td>";
+                    htmlResponse += "<td>" + tableRow.year + "</td>";
+                    htmlResponse += "</tr>";
+                });
+                htmlResponse += "</tbody></table>";
+
+                document.getElementById("table").innerHTML = htmlResponse;
+            }
+            function sortCheapFirst(table) {
+
+                table.sort(function (tableRowA, tableRowB) {
+                    return tableRowA.price - tableRowB.price;
+
+                });
+
+                getTable(table);
+            }
+
+            function sortNewestFirst(table) {
+
+                table.sort(function (tableRowA, tableRowB) {
+                    return tableRowB.year - tableRowA.year;
+
+                });
+
+                getTable(table);
+            }
+
+            function sortId(table) {
+                table.sort(function (tableRowA, tableRowB) {
+                    return tableRowA.id - tableRowB.id;
+
+                });
+
+                getTable(table);
+            }
+            function filterMake(table) {
+                
+                let value = document.getElementById("input").value;
+                
+                let newTable = table.filter(function(tableRow){
+                    
+                    return tableRow.make.toLowerCase() === value.toLowerCase(); 
+                });
+
+                getTable(newTable);
+            }
+
+        </script>
+
+    </body>
+</html>
